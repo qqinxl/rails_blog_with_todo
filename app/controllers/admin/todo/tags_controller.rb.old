@@ -1,0 +1,83 @@
+class Admin::Todo::TagsController < Admin::ApplicationController
+  # GET /admin/todo/tags
+  # GET /admin/todo/tags.json
+  def index
+    @admin_todo_tags = Admin::Todo::Tag.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @admin_todo_tags }
+    end
+  end
+
+  # GET /admin/todo/tags/1
+  # GET /admin/todo/tags/1.json
+  def show
+    @admin_todo_tag = Admin::Todo::Tag.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @admin_todo_tag }
+    end
+  end
+
+  # GET /admin/todo/tags/new
+  # GET /admin/todo/tags/new.json
+  def new
+    @admin_todo_tag = Admin::Todo::Tag.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @admin_todo_tag }
+    end
+  end
+
+  # GET /admin/todo/tags/1/edit
+  def edit
+    @admin_todo_tag = Admin::Todo::Tag.find(params[:id])
+  end
+
+  # POST /admin/todo/tags
+  # POST /admin/todo/tags.json
+  def create
+    @admin_todo_tag = Admin::Todo::Tag.new(params[:admin_todo_tag])
+
+    respond_to do |format|
+      if @admin_todo_tag.save
+        format.html { redirect_to @admin_todo_tag, notice: 'Tag was successfully created.' }
+        format.json { render json: @admin_todo_tag, status: :created, location: @admin_todo_tag }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @admin_todo_tag.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /admin/todo/tags/1
+  # PUT /admin/todo/tags/1.json
+  def update
+    @admin_todo_tag = Admin::Todo::Tag.find(params[:id])
+
+    respond_to do |format|
+      if @admin_todo_tag.update_attributes(params[:admin_todo_tag])
+        format.html { redirect_to @admin_todo_tag, notice: 'Tag was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @admin_todo_tag.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /admin/todo/tags/1
+  # DELETE /admin/todo/tags/1.json
+  def destroy
+    @admin_todo_tag = Admin::Todo::Tag.find(params[:id])
+    @admin_todo_tag.destroy
+
+    respond_to do |format|
+      format.html { redirect_to admin_todo_tags_url }
+      format.json { head :no_content }
+    end
+  end
+end

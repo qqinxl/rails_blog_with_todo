@@ -1,4 +1,8 @@
 RailsBlogWithTodo::Application.routes.draw do
+  namespace :admin do  namespace :todo do resources :lists end end
+
+  namespace :admin do  namespace :todo do resources :tags, :only => ["create", "destroy"] end end
+
   devise_for :users
 
   get "home/index"

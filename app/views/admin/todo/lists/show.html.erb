@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @admin_todo_list.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @admin_todo_list.description %>
+</p>
+
+<p>
+  <b>Starred:</b>
+  <%= @admin_todo_list.starred %>
+</p>
+
+<p>
+  <b>Due date:</b>
+  <%= @admin_todo_list.due_date %>
+</p>
+
+<p>
+  <b>Completed at:</b>
+  <%= @admin_todo_list.completed_at %>
+</p>
+
+<p>
+  <b>Deleted at:</b>
+  <%= @admin_todo_list.deleted_at %>
+</p>
+
+<p>
+  <b>Todo tag:</b>
+  <%= @admin_todo_list.todo_tag %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @admin_todo_list.user %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_todo_list_path(@admin_todo_list) %> |
+<%= link_to 'Back', admin_todo_lists_path %>

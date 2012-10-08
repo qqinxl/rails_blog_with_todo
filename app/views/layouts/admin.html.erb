@@ -12,17 +12,23 @@
       <h1><a href="/">Blog & Life</a></h1>
       <div id="user-navigation">
         <ul class="wat-cf">
-          <li><a href="#"><%= t("web-app-theme.profile", :default => "Profile") %></a></li>
-          <li><a href="#"><%= t("web-app-theme.settings", :default => "Settings") %></a></li>
-          <li><a href="/logout" class="logout"><%= t("web-app-theme.logout", :default => "Logout") %></a></li>
+          <li class="first <%= is_active_class 'home' %>"><%= link_to "Home", root_path  %></li>          
+          <li class="<%= is_active_class 'blogs' %>"><%= link_to "Blogs", "#"  %></li>
+          <% if user_signed_in? %>
+            <li class="<%= is_active_class 'todos' %>"><%= link_to "TODO", "#"  %></li>
+            <li><%= link_to "Logout", [ :destroy, :user_session ] , :method=>:delete %></li>
+          <% else %>
+            <li><%= link_to "Login", [ :new, :user_session ]  %></li>
+          <% end %>
         </ul>
+        <span class="alt right welcome"><% if user_signed_in? %> Sign in as <%= link_to current_user.name, "#" %> <% end %></span>
       </div>
       <div id="main-navigation">
         <ul class="wat-cf"></ul>
       </div>
     </div>
     <div id="wrapper" class="wat-cf">
-      <div class="flash">
+      <div class="flash" id="flash_message">
         <% flash.each do |type, message| -%>
           <div class="message <%= type %>">
             <p><%= message %></p>

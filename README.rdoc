@@ -4,7 +4,7 @@ This's a simple blog engine with todo list management.
 
 == DO Command
 
-Å¶START
+‚ÄªSTART
 
   rails new blog-wep-app
   
@@ -19,7 +19,7 @@ This's a simple blog engine with todo list management.
   bundle install
   rake db:create
 
-Å¶Home#Index
+‚ÄªHome#Index
 
   rails g controller home index
 
@@ -28,7 +28,7 @@ This's a simple blog engine with todo list management.
   #config/routes.rb
   root :to => "home#index"
 
-Å¶WEB-APP-THEME
+‚ÄªWEB-APP-THEME
 
   rails g web_app_theme:theme --app-name="Blog & Life"
   
@@ -48,7 +48,7 @@ This's a simple blog engine with todo list management.
     +.flash .error, .flash .error-list, .flash .alert
     + replace "/web-app-theme/themes/" to "/assets/web-app-theme/themes/"
 
-Å¶Devise
+‚ÄªDevise
   
   rails g devise:install
 
@@ -88,13 +88,37 @@ This's a simple blog engine with todo list management.
   rake db:migrate
   before_filter :authenticate_user!
 
-Å¶Blog
 
-  rails g scaffold blog subject:string content:text user:datetime
+‚ÄªTODO List
+
+  rails g scaffold admin/todo/tag name:string:uniq static:boolean:index user:references:index  
+  rails g scaffold admin/todo/list name:string:uniq description:text starred:boolean:index due_date:datetime completed_at:datetime deleted_at:datetime todo_tag:references:index user:references:index
+  
+  #app/models/todo/tag/
+  attr_accessible :user
+  
+  #Admin::ApplicationController
+  class Admin::ApplicationController < ActionController::Base
+    protect_from_forgery
+    
+    before_filter :authenticate_user!
+    
+    private
+      def after_sign_out_path_for(resource_or_scope)
+        scope = Devise::Mapping.find_scope!(resource_or_scope)
+        send(:"new_#{scope}_session_path")
+      end
+  end
+  
+  rake db:migrate
+
+‚ÄªBlog
+
+  rails g scaffold admin/blog subject:string content:text user:references
   rake db:migrate
   rails g web_app_theme:themed blogs --will-paginate
 
-#config/environment.rb
+  #config/environment.rb
   +ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
     +  if html_tag =~ /<label/
     +    %|<div class="fieldWithErrors">#{html_tag} <span class="error">#{[instance.error_message].join(', ')}</span></div>|.html_safe
@@ -102,17 +126,4 @@ This's a simple blog engine with todo list management.
     +    html_tag
     +  end
   +end
-
-Å¶TODO
- t.string   "name"
-  t.text     "description"
-  t.integer  "user_id"
-  t.datetime "created_at",                      :null => false
-  t.datetime "updated_at",                      :null => false
-  t.datetime "deleted_at"
-  t.boolean  "starred",      :default => false
-  t.datetime "completed_at"
-  t.datetime "due_date"
   
-rails g scaffold admin/todo name:string description:text starred:boolean due_date:datetime completed_at:datetime deleted_at:datetime user:references 
-

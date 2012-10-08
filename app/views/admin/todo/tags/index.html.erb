@@ -1,0 +1,27 @@
+<h1>Listing admin_todo_tags</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Static</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @admin_todo_tags.each do |admin_todo_tag| %>
+  <tr>
+    <td><%= admin_todo_tag.name %></td>
+    <td><%= admin_todo_tag.static %></td>
+    <td><%= admin_todo_tag.user %></td>
+    <td><%= link_to 'Show', admin_todo_tag %></td>
+    <td><%= link_to 'Edit', edit_admin_todo_tag_path(admin_todo_tag) %></td>
+    <td><%= link_to 'Destroy', admin_todo_tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Tag', new_admin_todo_tag_path %>

@@ -1,0 +1,51 @@
+<div class="block notice">
+  <h3>Simple Blog</h3>
+  <div class="content">
+    <p> A simple blog to record life & study ...</p>  
+  </div>
+</div>
+
+<div class="block">
+  <h3>Tags</h3>
+  <ul class="navigation" id="tags_list">
+    <% @admin_todo_tags.each do |admin_todo_tag| %>
+      <li><a href="#"><%= admin_todo_tag.name %></a></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="block padding">
+  <h3>Tag Add</h3>
+  <div class="form">
+  <%= form_for(@admin_todo_tag, :remote => true, :url => admin_todo_tags_path, :html =>{:class=>"sidebar_form"}) do |f| %>    
+    <div class="group">
+        <div class="left"><span class="description">Tag name</span><%= f.text_field :name, :class => "text_field" %>  </div>
+        <div class="right"><button class="button" type="submit"><%= image_tag "web-app-theme/icons/tick.png" %>Create! </button></div>
+    </div>    
+    <div class="group navform wat-cf">
+        
+    </div>
+  <% end %>
+  </div>
+</div>
+
+<div class="block">
+  <h3>TODO Study links</h3>
+  <ul class="navigation">
+    <li><a href="http://guides.railschina.org/action_controller_overview.html">Contoller</a></li>
+    <li><a href="http://guides.railschina.org/form_helpers.html">Rails Form helpers</a></li>
+    <li><a href="http://guides.railschina.org/layouts_and_rendering.html">Layouts and Rendering in Rails</a></li>
+    <li><a href="http://guides.railschina.org/active_record_querying.html">Active Record Querying</a></li>
+    <li><a href="http://guides.railschina.org/association_basics.html">A Guide to Active Record Associations</a></li>
+    <li><a href="http://guides.railschina.org/active_record_validations_callbacks.html">Validations Callback</a></li>
+  </ul>
+  <ul class="navigation">
+    <li><a href="http://guides.ruby-china.org/migrations.html">Migrations</a></li>
+    <li><a href="http://guides.railschina.org/engines.html">Rails Engine</a></li>
+    <li><a href="http://guides.railschina.org/caching_with_rails.html">Rails with Cache</a></li>
+    <li><a href="http://guides.railschina.org/command_line.html">Rake command line</a></li>
+    <li><a href="http://guides.railschina.org/performance_testing.html">Performance Test</a></li>
+    <li><a href="http://guides.railschina.org/configuring.html">System Configuring</a></li>
+    <li><a href="http://guides.railschina.org/testing.html">Unit test</a></li>
+  </ul>
+</div>

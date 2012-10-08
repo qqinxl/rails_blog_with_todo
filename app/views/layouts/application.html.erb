@@ -12,13 +12,13 @@
       <h1><a href="/">Blog & Life</a></h1>
       <div id="user-navigation">
         <ul class="wat-cf">
-          <li class="first <%= is_active_class 'home' %>"><%= link_to "#{t("navigation.home.name", :default => "Home")}", root_path  %></li>          
-          <li class="<%= is_active_class 'blogs' %>"><%= link_to "#{t("navigation.blog.name", :default => "Blogs")}", "#"  %></li>
+          <li class="first <%= is_active_class 'home' %>"><%= link_to "Home", root_path  %></li>          
+          <li class="<%= is_active_class 'blogs' %>"><%= link_to "Blogs", "#"  %></li>
           <% if user_signed_in? %>
-            <li class="<%= is_active_class 'todos' %>"><%= link_to "#{t("navigation.todo.name", :default => "TODO")}", "#"  %></li>
-            <li><%= link_to "#{t("navigation.logout.name", :default => "Logout")}", [ :destroy, :user_session ] , :method=>:delete %></li>
+            <li class="<%= is_active_class 'todos' %>"><%= link_to "TODO", "#"  %></li>
+            <li><%= link_to "Logout", [ :destroy, :user_session ] , :method=>:delete %></li>
           <% else %>
-            <li><%= link_to "#{t("navigation.Login.name", :default => "Login")}", [ :new, :user_session ]  %></li>
+            <li><%= link_to "Login", [ :new, :user_session ]  %></li>
           <% end %>
         </ul>
         <span class="alt right welcome"><% if user_signed_in? %> Sign in as <%= link_to current_user.name, "#" %> <% end %></span>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div id="wrapper" class="wat-cf">
-      <div class="flash">
+      <div class="flash" id="flash_message">
         <% flash.each do |type, message| -%>
           <div class="message <%= type %>">
             <p><%= message %></p>

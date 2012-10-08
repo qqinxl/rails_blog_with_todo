@@ -447,11 +447,9 @@ a.button:active, button.button:active {
 }
 
 .form div.left {
-  width: 10%;
   float: left;
 }
 .form div.right {
-  width: 85%;
   float: right;
 }
 
@@ -461,5 +459,14 @@ a.button:active, button.button:active {
 }
 .login div.right, .signup div div.right {
   width: 74%;
+  float: right;
+}
+
+.sidebar_form div div.left {
+  width: 65%;
+  float: left;
+}
+.sidebar_form div div.right {
+  width: 25%;
   float: right;
 }
