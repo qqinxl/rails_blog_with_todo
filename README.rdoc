@@ -1,32 +1,119 @@
-== Welcome to Rails
+== Welcome to Rails_Blog_With_TODO 
 
-Rails is a web-application framework that includes everything needed to create
-database-backed web applications according to the Model-View-Control pattern.
+This's a simple blog engine with todo list management.
 
-This pattern splits the view (also called the presentation) into "dumb"
-templates that are primarily responsible for inserting pre-built data in between
-HTML tags. The model contains the "smart" domain objects (such as Account,
-Product, Person, Post) that holds all the business logic and knows how to
-persist themselves to a database. The controller handles the incoming requests
-(such as Save New Account, Update Product, Show Post) by manipulating the model
-and directing data to the view.
+== DO Command
 
-In Rails, the model is handled by what's called an object-relational mapping
-layer entitled Active Record. This layer allows you to present the data from
-database rows as objects and embellish these data objects with business logic
-methods. You can read more about Active Record in
-link:files/vendor/rails/activerecord/README.html.
+Å¶START
 
-The controller and view are handled by the Action Pack, which handles both
-layers by its two parts: Action View and Action Controller. These two layers
-are bundled in a single package due to their heavy interdependence. This is
-unlike the relationship between the Active Record and Action Pack that is much
-more separate. Each of these packages can be used independently outside of
-Rails. You can read more about Action Pack in
-link:files/vendor/rails/actionpack/README.html.
+  rails new blog-wep-app
+  
+  #Gemfile
+  gem 'will_paginate'
+  gem 'devise'
+  group :assets do
+    gem 'web-app-theme', :git =>'git://github.com/pilu/web-app-theme.git'
+  end
+  
+  bundle install
+  rake db:create
+
+Å¶Home#Index
+
+  rails g controller home index
+
+  rm public/index.html
+
+  #config/routes.rb
+  root :to => "home#index"
+
+Å¶WEB-APP-THEME
+rails g web_app_theme:theme --app-name="Blog & Life"
+rails g web_app_theme:themed home --themed-type=text
+
+rails g web_app_theme:assets
+cp $(bundle show web-app-theme)/spec/dummy/public/images/* app/assets/images/web-app-theme/ -r
+# cp C:/Ruby193/lib/ruby/gems/1.9.1/bundler/gems/web-app-theme-b7310fe5001e/spec/dummy/public/images/* app/assets/images/web-app-theme/ -r
+#app/views/layouts/application.html
+-  stylesheet_link_tag 'web_app_theme'
++  stylesheet_link_tag 'application'
+-  javascript_include_tag :defaults, :cache => true	
++  javascript_include_tag 'application'
+
+#app/assets/stylesheets/web-app-theme/themes/default/style.css
++.flash .error, .flash .error-list, .flash .alert
++ replace "/web-app-theme/themes/" to "/assets/web-app-theme/themes/"
 
 
-== Getting Started
+Å¶Devise
+rails g devise:install
+
+#config/initializers/devise.rb
++  config.scoped_views = true
+
+rails g devise user
+
+#20121004045244_devise_create_users.rb
++  t.string :name,              :null => false, :default => ""
+
+rails g web_app_theme:theme sign --layout-type=sign --app-name="Blog & Life"
+rails g devise:views
+
+#config/application.rb
++    config.to_prepare do
++      Devise::SessionsController.layout "sign"
++      Devise::RegistrationsController.layout "sign"
++    end
+
+#devise_helper.rb
+module DeviseHelper
+   def devise_error_messages!
+    return [] if resource.errors.empty?
+    return resource.errors
+   end
+end
+
+#/views/devise/sessions/new.html.erb
+#/views/devise/registrations/new.html.erb
+<div class="flash">
+  <% devise_error_messages!.each do |key, value| %>
+    <div class="message error left">
+      <p><%= key %>:<%= value %></p>
+    </div>
+  <% end %>
+</div>
+
+rake db:migrate
+before_filter :authenticate_user!
+
+Å¶Blog
+rails g scaffold blog subject:string content:text user:datetime
+rake db:migrate
+rails g web_app_theme:themed blogs --will-paginate
+
+#config/environment.rb
++ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
++  if html_tag =~ /<label/
++    %|<div class="fieldWithErrors">#{html_tag} <span class="error">#{[instance.error_message].join(', ')}</span></div>|.html_safe
++  else
++    html_tag
++  end
++end
+
+Å¶TODO
+ t.string   "name"
+  t.text     "description"
+  t.integer  "user_id"
+  t.datetime "created_at",                      :null => false
+  t.datetime "updated_at",                      :null => false
+  t.datetime "deleted_at"
+  t.boolean  "starred",      :default => false
+  t.datetime "completed_at"
+  t.datetime "due_date"
+  
+rails g scaffold admin/todo name:string description:text starred:boolean due_date:datetime completed_at:datetime deleted_at:datetime user:references 
+
+
 
 1. At the command prompt, create a new Rails application:
        <tt>rails new myapp</tt> (where <tt>myapp</tt> is the application name)
