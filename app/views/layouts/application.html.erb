@@ -12,10 +12,10 @@
       <h1><a href="/">Blog & Life</a></h1>
       <div id="user-navigation">
         <ul class="wat-cf">
-          <li class="first #{is_active_class("home")}"><%= link_to "#{t("navigation.home.name", :default => "Home")}", root_path  %></li>          
-          <li class="#{is_active_class("blogs")}"><%= link_to "#{t("navigation.blog.name", :default => "Blogs")}", "#"  %></li>
+          <li class="first <%= is_active_class 'home' %>"><%= link_to "#{t("navigation.home.name", :default => "Home")}", root_path  %></li>          
+          <li class="<%= is_active_class 'blogs' %>"><%= link_to "#{t("navigation.blog.name", :default => "Blogs")}", "#"  %></li>
           <% if user_signed_in? %>
-            <li class="#{is_active_class("todos")}"><%= link_to "#{t("navigation.todo.name", :default => "TODO")}", "#"  %></li>
+            <li class="<%= is_active_class 'todos' %>"><%= link_to "#{t("navigation.todo.name", :default => "TODO")}", "#"  %></li>
             <li><%= link_to "#{t("navigation.logout.name", :default => "Logout")}", [ :destroy, :user_session ] , :method=>:delete %></li>
           <% else %>
             <li><%= link_to "#{t("navigation.Login.name", :default => "Login")}", [ :new, :user_session ]  %></li>
