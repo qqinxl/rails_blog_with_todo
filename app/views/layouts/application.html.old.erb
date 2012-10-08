@@ -12,16 +12,10 @@
       <h1><a href="/">Blog & Life</a></h1>
       <div id="user-navigation">
         <ul class="wat-cf">
-          <li class="first #{is_active_class("home")}"><%= link_to "#{t("navigation.home.name", :default => "Home")}", root_path  %></li>          
-          <li class="#{is_active_class("blogs")}"><%= link_to "#{t("navigation.blog.name", :default => "Blogs")}", "#"  %></li>
-          <% if user_signed_in? %>
-            <li class="#{is_active_class("todos")}"><%= link_to "#{t("navigation.todo.name", :default => "TODO")}", "#"  %></li>
-            <li><%= link_to "#{t("navigation.logout.name", :default => "Logout")}", [ :destroy, :user_session ] , :method=>:delete %></li>
-          <% else %>
-            <li><%= link_to "#{t("navigation.Login.name", :default => "Login")}", [ :new, :user_session ]  %></li>
-          <% end %>
+          <li><a href="#"><%= t("web-app-theme.profile", :default => "Profile") %></a></li>
+          <li><a href="#"><%= t("web-app-theme.settings", :default => "Settings") %></a></li>
+          <li><a href="/logout" class="logout"><%= t("web-app-theme.logout", :default => "Logout") %></a></li>
         </ul>
-        <span class="alt right welcome"><% if user_signed_in? %> Sign in as <%= link_to current_user.name, "#" %> <% end %></span>
       </div>
       <div id="main-navigation">
         <ul class="wat-cf"></ul>
