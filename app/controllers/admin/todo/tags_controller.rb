@@ -6,19 +6,18 @@ class Admin::Todo::TagsController < Admin::ApplicationController
     @admin_todo_tag.user = current_user
 
     if @admin_todo_tag.save
-      render :json => @admin_todo_tag.to_json
+      render :json => {:data => @admin_todo_tag.to_json}
     else
-      render :json => {:errors => @admin_todo_tag.errors.full_messages}
+      render :json => {:errors => @admin_todo_tag.errors.full_messages, :data => @admin_todo_tag.to_json}
     end
     
   end
   
   # DELETE /admin/todo/tags/1
-  # DELETE /admin/todo/tags/1.json
   def destroy
     @admin_todo_tag = Admin::Todo::Tag.find(params[:id])
     @admin_todo_tag.destroy
-
-    head :no_content
+    
+    render :json => {:data => @admin_todo_tag.to_json}
   end
 end

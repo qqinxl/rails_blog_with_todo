@@ -1,7 +1,7 @@
 class CreateAdminTodoTags < ActiveRecord::Migration
   def change
     create_table :admin_todo_tags do |t|
-      t.string :name
+      t.string :name, :null => false
       t.boolean :static,  :default => false
       t.references :user
 

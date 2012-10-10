@@ -229,7 +229,7 @@ hr {
   -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
-#sidebar .warning, #sidebar .padding {
+#sidebar .warning {
   color: #222222;
   background: #ffef4e;
 }
@@ -459,14 +459,5 @@ a.button:active, button.button:active {
 }
 .login div.right, .signup div div.right {
   width: 74%;
-  float: right;
-}
-
-.sidebar_form div div.left {
-  width: 65%;
-  float: left;
-}
-.sidebar_form div div.right {
-  width: 25%;
   float: right;
 }

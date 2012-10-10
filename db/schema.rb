@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(:version => 20121008082623) do
 
   create_table "admin_todo_lists", :force => true do |t|
-    t.string   "name"
+    t.string   "title",                           :null => false
     t.text     "description"
     t.boolean  "starred",      :default => false
-    t.datetime "due_date"
+    t.datetime "due_date",                        :null => false
     t.datetime "completed_at"
     t.datetime "deleted_at"
     t.integer  "todo_tag_id"
@@ -26,13 +26,13 @@ ActiveRecord::Schema.define(:version => 20121008082623) do
     t.datetime "updated_at",                      :null => false
   end
 
-  add_index "admin_todo_lists", ["name"], :name => "index_admin_todo_lists_on_name", :unique => true
   add_index "admin_todo_lists", ["starred"], :name => "index_admin_todo_lists_on_starred"
+  add_index "admin_todo_lists", ["title"], :name => "index_admin_todo_lists_on_title", :unique => true
   add_index "admin_todo_lists", ["todo_tag_id"], :name => "index_admin_todo_lists_on_todo_tag_id"
   add_index "admin_todo_lists", ["user_id"], :name => "index_admin_todo_lists_on_user_id"
 
   create_table "admin_todo_tags", :force => true do |t|
-    t.string   "name"
+    t.string   "name",                          :null => false
     t.boolean  "static",     :default => false
     t.integer  "user_id"
     t.datetime "created_at",                    :null => false

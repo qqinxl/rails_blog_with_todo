@@ -15,7 +15,7 @@
           <li class="first <%= is_active_class 'home' %>"><%= link_to "Home", root_path  %></li>          
           <li class="<%= is_active_class 'blogs' %>"><%= link_to "Blogs", "#"  %></li>
           <% if user_signed_in? %>
-            <li class="<%= is_active_class 'todos' %>"><%= link_to "TODO", "#"  %></li>
+            <li class="<%= is_active_class 'todos' %>"><%= link_to "TODO", admin_todo_lists_path  %></li>
             <li><%= link_to "Logout", [ :destroy, :user_session ] , :method=>:delete %></li>
           <% else %>
             <li><%= link_to "Login", [ :new, :user_session ]  %></li>
@@ -36,15 +36,16 @@
         <% end -%>
       </div>
       <div id="main">
-        <%= yield %>
-        <div id="footer">
-          <div class="block">
-            <p>Copyright &copy; <%= Time.now.year %> Blog & Life.</p>
-          </div>
-        </div>
+        <%= yield %>        
       </div>
       <div id="sidebar">
         <%= yield :sidebar %>
+      </div>
+      <hr style="clear:both;"/>
+      <div id="footer">
+        <div class="block">
+          <p>Copyright &copy; <%= Time.now.year %> Blog & Life.</p>
+        </div>
       </div>
     </div>
   </div>

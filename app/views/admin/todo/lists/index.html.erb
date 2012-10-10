@@ -1,42 +1,64 @@
 <div class="block">
-    <h1>Listing admin_todo_lists</h1>
+  <div class="secondary-navigation">
+        <ul class="wat-cf">
+          <li class="first active"><%= link_to "TODO List", admin_todo_lists_path, :id=>"admin_todo_lists_tab"  %></li>
+          <li><%= link_to "New", new_admin_todo_list_path, :id=>"new_admin_todo_list_tab", :style=>"#{@admin_todo_tags.empty? ? 'display:none;':''}" %></li>          
+        </ul>
+  </div>
+  <div class="content warning" id="new_todo_list_content" style="float:right; width:30%;">
+        <h2 class="title">New Todo List</h2>
+        <div class="inner">
+          <%= form_for @admin_todo_list, :remote => true, :url => admin_todo_lists_path, :html => { :class => :form } do |f| -%>
+                <%= render :partial => "form", :locals => {:f => f} %>
+          <% end -%>
+        </div>
+  </div>
+  <div class="content" style="float:left; width:60%;">
+        <h2 class="title" id="admin_todo_lists_title">All TODOs</h2>
+        <div class="inner">
+                <table class="table" id="admin_todo_lists_table">
+                        <tr>
+                          <th class="first width25"></th>       
+                          <th class="width50">Tag</th>    
+                          <th>Title</th>          
+                          <th class="width100">Due</th>
+                          <th class="width100">&nbsp;</th>
+                        </tr>
+                        <% if(@admin_todo_lists.empty?)%>
+                                <tr>
+                                  <td class="first odd" colspan=5>There is no data to list.</td>  
+                                </tr>
+                        <% else %>
+                        
+                        <% @admin_todo_lists.each do |admin_todo_list| -%>
+                                <tr class="<%= cycle("odd", "even") %> <%= "line-through" if admin_todo_list.is_deleted? %>">
+                                  <td>
+                                    <%= admin_todo_list.icon %>
+                                  </td>  
+                                  <td>
+                                    <%= admin_todo_list.tag.name %>
+                                  </td>         
+                                  <td>
+                                    <%= link_to admin_todo_list.title, admin_todo_list_path(admin_todo_list) %>
+                                  </td>
+                                  <td>
+                                    <%= admin_todo_list.due_date.strftime("%Y-%m-%d %H:%M") %>
+                                  </td>
+                                  <td class="last">
+                                    <%= link_to "Done", admin_todo_list_path(admin_todo_list) %>
+                                    <%= link_to "Delete", admin_todo_list_path(admin_todo_list), :method => :delete, :confirm => "Are you sure?" %>
+                                  </td>
+                                </tr>
+                        <% end -%>
+                <% end %>
 
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Starred</th>
-        <th>Due date</th>
-        <th>Completed at</th>
-        <th>Deleted at</th>
-        <th>Todo tag</th>
-        <th>User</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-
-    <% @admin_todo_lists.each do |admin_todo_list| %>
-      <tr>
-        <td><%= admin_todo_list.name %></td>
-        <td><%= admin_todo_list.description %></td>
-        <td><%= admin_todo_list.starred %></td>
-        <td><%= admin_todo_list.due_date %></td>
-        <td><%= admin_todo_list.completed_at %></td>
-        <td><%= admin_todo_list.deleted_at %></td>
-        <td><%= admin_todo_list.todo_tag %></td>
-        <td><%= admin_todo_list.user %></td>
-        <td><%= link_to 'Show', admin_todo_list %></td>
-        <td><%= link_to 'Edit', edit_admin_todo_list_path(admin_todo_list) %></td>
-        <td><%= link_to 'Destroy', admin_todo_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-    </table>
-
-    <br />
-
-    <%= link_to 'New List', new_admin_todo_list_path %>
-
+                </table>
+                <div class="actions-bar wat-cf">
+                        <div class="actions"></div>
+                        <%= will_paginate @admin_todo_lists  %>
+                </div>
+        </div>
+  </div>
 </div>
 
 <% content_for :sidebar, render(:partial => 'sidebar') -%>

@@ -36,15 +36,16 @@
         <% end -%>
       </div>
       <div id="main">
-        <%= yield %>
-        <div id="footer">
-          <div class="block">
-            <p>Copyright &copy; <%= Time.now.year %> Blog & Life.</p>
-          </div>
-        </div>
+        <%= yield %>        
       </div>
       <div id="sidebar">
         <%= yield :sidebar %>
+      </div>
+      <hr style="clear:both;"/>
+      <div id="footer">
+        <div class="block">
+          <p>Copyright &copy; <%= Time.now.year %> Blog & Life.</p>
+        </div>
       </div>
     </div>
   </div>

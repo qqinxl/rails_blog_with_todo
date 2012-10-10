@@ -1,49 +1,29 @@
-<%= form_for(@admin_todo_list) do |f| %>
-  <% if @admin_todo_list.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@admin_todo_list.errors.count, "error") %> prohibited this admin_todo_list from being saved:</h2>
+<div class="group">
+  <%= f.label :todo_tag_id, "Select one tag", :class => :label %>
+  <%= f.select :todo_tag_id, @admin_todo_tag_names %>
+</div>
 
-      <ul>
-      <% @admin_todo_list.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="group">
+  <%= f.label :due_date, :class => :label %>
+  <%= f.datetime_select :due_date, :class => 'datetime_select' %>
+</div>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :starred %><br />
-    <%= f.check_box :starred %>
-  </div>
-  <div class="field">
-    <%= f.label :due_date %><br />
-    <%= f.datetime_select :due_date %>
-  </div>
-  <div class="field">
-    <%= f.label :completed_at %><br />
-    <%= f.datetime_select :completed_at %>
-  </div>
-  <div class="field">
-    <%= f.label :deleted_at %><br />
-    <%= f.datetime_select :deleted_at %>
-  </div>
-  <div class="field">
-    <%= f.label :todo_tag %><br />
-    <%= f.text_field :todo_tag %>
-  </div>
-  <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+<div class="group">
+  <%= f.label :title, :class => :label %>
+  <%= f.text_field :title, :class => 'text_field' %>
+  <span class="description">Ex: a simple text</span>
+</div>
+
+<div class="group">
+  <%= f.label :description, :class => :label %>
+  <%= f.text_area :description, :class => 'text_area' , :rows => "5" %>
+  <span class="description">Ex: a simple text</span>
+</div>
+
+<div class="group navform wat-cf">
+  <button class="button" type="submit">
+    <%= image_tag("web-app-theme/icons/tick.png", :alt => "Save!") %> Save
+  </button>
+  <span class="text_button_padding"> or </span>
+  <%= link_to "Cancel", admin_todo_lists_path, :class => "text_button_padding link_button" %>
+</div>
