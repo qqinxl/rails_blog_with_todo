@@ -6,7 +6,7 @@ class Admin::Todo::List < ActiveRecord::Base
   
   attr_accessible :completed_at, :deleted_at, :description, :due_date, :title, :starred
   attr_accessible :user
-  attr_accessible :todo_tag_id, :tag
+  attr_accessible :todo_tag_id, :tag_id, :tag
   
   validates :title,  :presence => true, :uniqueness=>true
   validates :todo_tag_id,  :presence => true
