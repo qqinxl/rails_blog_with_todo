@@ -1,7 +1,17 @@
 RailsBlogWithTodo::Application.routes.draw do
-  namespace :admin do  namespace :todo do resources :lists end end
+  namespace :admin do  
+    namespace :todo do 
+      resources :lists 
+      match 'lists/done/:id' => 'lists#done', :via => [:get]
+      match 'done/:id' => 'lists#done', :via => [:get]
+    end 
+  end
 
-  namespace :admin do  namespace :todo do resources :tags, :only => ["create", "destroy"] end end
+  namespace :admin do  
+    namespace :todo do 
+      resources :tags, :only => ["create", "destroy"] 
+    end 
+  end
 
   devise_for :users
 
@@ -63,4 +73,5 @@ RailsBlogWithTodo::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+  
 end

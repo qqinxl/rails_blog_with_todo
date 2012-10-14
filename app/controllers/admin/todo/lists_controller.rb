@@ -21,11 +21,12 @@ class Admin::Todo::ListsController < Admin::ApplicationController
   # GET /admin/todo/lists/1.json
   def show
     @admin_todo_list = Admin::Todo::List.find(params[:id])
-    @admin_todo_list.tag = @admin_todo_tag_map[@admin_todo_list.todo_tag_id] 
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @admin_todo_list }
+
+    if @admin_todo_list 
+      @admin_todo_list.tag = @admin_todo_tag_map[@admin_todo_list.todo_tag_id] 
+      render :json => {:data => @admin_todo_list.to_json(:include => :tag)}
+    else
+      render :json => {:errors => "There is no data."}
     end
   end
 
@@ -66,15 +67,25 @@ class Admin::Todo::ListsController < Admin::ApplicationController
     end
   end
 
+  # GET /admin/todo/done/1
+  def done
+    @admin_todo_list = Admin::Todo::List.find(params[:id])
+
+    if @admin_todo_list.update_attribute(:completed_at, DateTime.now) 
+      render :json => {:data => @admin_todo_list.to_json}
+    else
+      render :json => {:errors => @admin_todo_list.errors.full_messages, :data => @admin_todo_list.to_json} 
+    end
+  end
+
   # DELETE /admin/todo/lists/1
-  # DELETE /admin/todo/lists/1.json
   def destroy
     @admin_todo_list = Admin::Todo::List.find(params[:id])
-    @admin_todo_list.destroy
 
-    respond_to do |format|
-      format.html { redirect_to admin_todo_lists_url }
-      format.json { head :no_content }
+    if @admin_todo_list.update_attribute(:deleted_at, DateTime.now) 
+      render :json => {:data => @admin_todo_list.to_json}
+    else
+      render :json => {:errors => @admin_todo_list.errors.full_messages, :data => @admin_todo_list.to_json} 
     end
   end
   

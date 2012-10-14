@@ -21,7 +21,17 @@ $ ->
 		false
 	
 	$("#new_todo_list_content").hide()
-	
+	$("#show_todo_list_content").hide()
+
+	$('#admin_todo_lists_table a[type="show"]').live 'click', (e) =>
+		$("#new_todo_list_content").hide()
+		$.todo_list.ajaxLink(e.target, "GET", $.todo_list.show)
+		false
+
+	$('#admin_todo_lists_table a[type="done"]').live 'click', (e) =>
+		$.todo_list.ajaxLink(e.target, "GET", $.falsh_message.html("Done.", "notice"))
+		false
+
 	$("#cancel_new_admin_todo_list").live 'click', (e) =>
 		$("#new_todo_list_content").hide()
 		$.todo_list.active("admin_todo_lists_tab")
@@ -29,13 +39,20 @@ $ ->
 	
 	$("#new_admin_todo_list_tab").live 'click', (e) =>
 		$("#new_todo_list_content").show()
+		$("#show_todo_list_content").hide()
 		$.todo_list.active("new_admin_todo_list_tab")
 		false
 
 	$("#admin_todo_lists_tab").live 'click', (e) =>
 		$("#new_todo_list_content").hide()
+		$("#show_todo_list_content").hide()
 		$.todo_list.active("admin_todo_lists_tab")
-		$.todo_list.reload($(e.target).attr("herf"))
+		$.todo_list.reload()
 		false
+	
+
+
+
+	
 		
 			

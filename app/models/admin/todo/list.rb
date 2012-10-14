@@ -1,6 +1,4 @@
-# encoding: shift_jis
-
-class Admin::Todo::List < ActiveRecord::Base
+ï»¿class Admin::Todo::List < ActiveRecord::Base
   belongs_to :tag
   belongs_to :user
   
@@ -41,9 +39,11 @@ class Admin::Todo::List < ActiveRecord::Base
   end
   
   def icon
-    return "š".encode!("utf-8") if self.is_starred?
-    return "™".encode!("utf-8") if self.is_today?
-    return "¤".encode!("utf-8") if self.is_past?
-    return ""
+    icon = ""
+    icon += "Ââ—" if self.completed_at
+    icon += "Ââ˜†" if self.is_starred?
+    icon += "Ââ–³" if self.is_today?
+    icon += "Ââ–½" if self.is_past?
+    return icon
   end
 end

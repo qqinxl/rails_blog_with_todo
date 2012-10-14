@@ -13,6 +13,8 @@
           <% end -%>
         </div>
   </div>
+  <div class="content warning" id="show_todo_list_content" style="float:right; width:30%;">
+  </div>
   <div class="content" style="float:left; width:60%;">
         <h2 class="title" id="admin_todo_lists_title">♪ All TODOs</h2>
         <div class="inner">
@@ -39,14 +41,14 @@
                                     <%= admin_todo_list.tag.name %>
                                   </td>         
                                   <td>
-                                    <%= link_to admin_todo_list.title, admin_todo_list_path(admin_todo_list) %>
+                                    <%= link_to admin_todo_list.title, admin_todo_list, :type=>"show"  %>
                                   </td>
                                   <td>
                                     <%= admin_todo_list.due_date.strftime("%Y-%m-%d %H:%M") %>
                                   </td>
                                   <td class="last">
-                                    <%= link_to "Done", admin_todo_list_path(admin_todo_list) %>
-                                    <%= link_to "Delete", admin_todo_list_path(admin_todo_list), :method => :delete, :confirm => "Are you sure?" %>
+                                    <%= link_to "Done", "/admin/todo/done/#{admin_todo_list.id}", :type=>"done" %>
+                                    <%= link_to "Delete", admin_todo_list_path(admin_todo_list), :type=>"delete", :method => :delete, :confirm => "Are you sure?" %>
                                   </td>
                                 </tr>
                         <% end -%>
